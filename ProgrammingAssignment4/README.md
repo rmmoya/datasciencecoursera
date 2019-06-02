@@ -2,6 +2,9 @@
 
 The purpose of this project is a programming assignment of the Getting and Cleaning Data course from Coursera to demonstrate my ability to collect, work with, and clean a data set. The goal is to prepare tidy data that can be used for later analysis.
 
+The output of the programming assingment is stored in the following CSV file:
+https://github.com/rmmoya/datasciencecoursera/blob/master/ProgrammingAssignment4/average_per_activity_and_subject.txt
+
 ### Description of the process
 #### Step 1 - Load the data from each file and merge training and test sets into one single data frame
 1. Load the feature names from the file features.txt into "feature" data frame.
