@@ -26,6 +26,29 @@ With mutate() and factor() functions we can easily transform the activity number
 <!-- -->
     data <- data %>% mutate(activity, factor(activity, labels = activity_labels$name))
 
+#### Step 4 - Use descriptive names for the columns
+
+Using the gsub function to do the following changes:
+* All Acc in column’s name replaced by Accelerometer
+* All Gyro in column’s name replaced by Gyroscope
+* All BodyBody in column’s name replaced by Body
+* All Mag in column’s name replaced by Magnitude
+* All start with character f in column’s name replaced by Frequency
+* All start with character t in column’s name replaced by Time
+<!-- -->
+names(data)<-gsub("Acc", "Accelerometer", names(data))
+names(data)<-gsub("Gyro", "Gyroscope", names(data))
+names(data)<-gsub("BodyBody", "Body", names(data))
+names(data)<-gsub("Mag", "Magnitude", names(data))
+names(data)<-gsub("^t", "Time", names(data))
+names(data)<-gsub("^f", "Frequency", names(data))
+names(data)<-gsub("tBody", "TimeBody", names(data))
+names(data)<-gsub("-mean()", "Mean", names(data), ignore.case = TRUE)
+names(data)<-gsub("-std()", "STD", names(data), ignore.case = TRUE)
+names(data)<-gsub("-freq()", "Frequency", names(data), ignore.case = TRUE)
+names(data)<-gsub("angle", "Angle", names(data))
+names(data)<-gsub("gravity", "Gravity", names(data))
+
 #### Step 5 - Create a second, independent tidy data set with the average of each variable for each activity and each subject
 In dplyr package, the functions group_by() and summarise_all() help us to calculate the mean for all the features for each subject and activity
 <!-- -->

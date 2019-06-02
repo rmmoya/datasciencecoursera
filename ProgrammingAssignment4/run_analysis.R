@@ -59,8 +59,20 @@ data <- data[,extract]
 data <- data %>% mutate(activity = factor(activity, labels = activity_labels$name))
 
 ## Step 4 - Appropriately labels the data set with descriptive variable names
-## ** This is already done in step 1, when the column names where named based 
-## on the features.txt file ** 
+
+
+names(data)<-gsub("Acc", "Accelerometer", names(data))
+names(data)<-gsub("Gyro", "Gyroscope", names(data))
+names(data)<-gsub("BodyBody", "Body", names(data))
+names(data)<-gsub("Mag", "Magnitude", names(data))
+names(data)<-gsub("^t", "Time", names(data))
+names(data)<-gsub("^f", "Frequency", names(data))
+names(data)<-gsub("tBody", "TimeBody", names(data))
+names(data)<-gsub("-mean()", "Mean", names(data), ignore.case = TRUE)
+names(data)<-gsub("-std()", "STD", names(data), ignore.case = TRUE)
+names(data)<-gsub("-freq()", "Frequency", names(data), ignore.case = TRUE)
+names(data)<-gsub("angle", "Angle", names(data))
+names(data)<-gsub("gravity", "Gravity", names(data))
 
 
 ## Step 5 - Create a second, independent tidy data set with the average of 
@@ -69,3 +81,5 @@ data <- data %>% mutate(activity = factor(activity, labels = activity_labels$nam
 avg_data <- data %>% 
   group_by(activity, subject) %>%
   summarise_all(mean)
+
+write.table(x = avg_data, file = "average_per_activity_and_subject.txt", row.name = FALSE)
