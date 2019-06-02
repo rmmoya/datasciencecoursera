@@ -2,7 +2,7 @@
 require(dplyr)
 
 ## Step 1 - Load the data from each file and merge training and test sets into one single data frame
-folder <- "C:\\temp\\UCI HAR Dataset\\"
+folder <- "UCI HAR Dataset\\"
 
 # Load feature names and activity labels
 features <- read.delim(paste(folder, "features.txt", sep = ""), 
