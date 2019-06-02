@@ -2,6 +2,16 @@
 
 The purpose of this project is a programming assignment of the Getting and Cleaning Data course from Coursera to demonstrate my ability to collect, work with, and clean a data set. The goal is to prepare tidy data that can be used for later analysis.
 
+### Description of the process
+#### Step 1 - Load the data from each file and merge training and test sets into one single data frame
+1. Load the feature names from the file features.txt into "feature" data frame.
+2. Import X_test.txt and X_train.txt and specifying that the column names are in the "feature" data frame.
+3. Use cbind() to add the person activity during the test from Y_test.txt and Y_train.txt into test and training data sets, respectively.
+4. Use cbind() to add the subject measurement from subject_test.txt and subject_train.txt into test and training data sets, respectively.
+5. Merge train and test sets into one single data frame with rbind() function.
+
+#### Step 2 - Extract only the measurements on the mean and standard deviation for each measurement/subject. 
+
 ### Description of the data set
 
 One of the most exciting areas in all of data science right now is wearable computing - see for example this article . Companies like Fitbit, Nike, and Jawbone Up are racing to develop the most advanced algorithms to attract new users. The data linked to from the course website represent data collected from the accelerometers from the Samsung Galaxy S smartphone. A full description is available at the site where the data was obtained:
