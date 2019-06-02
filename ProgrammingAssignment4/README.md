@@ -10,7 +10,25 @@ The purpose of this project is a programming assignment of the Getting and Clean
 4. Use cbind() to add the subject measurement from subject_test.txt and subject_train.txt into test and training data sets, respectively.
 5. Merge train and test sets into one single data frame with rbind() function.
 
-#### Step 2 - Extract only the measurements on the mean and standard deviation for each measurement/subject. 
+#### Step 2 - Extract only the measurements on the mean and standard deviation for each measurement. 
+Use the grepl function to identify the columns that correspond to mean and std aggregation functions. Note that meanFreq columns have to be explicitly removed as they go through the grepl("mean", ...) pass
+
+<!-- -->
+    extract <- (grepl("mean", features$feature) | grepl("std", features$feature)) &
+      !(grepl("meanFreq", features$feature))
+    data <- data[,extract]
+    
+#### Step 3 - Replace the activity numbers with the corresponding label stored in activity_labels.txt
+With mutate() and factor() functions we can easily transform the activity numbers to the corresponding names
+<!-- -->
+    data <- data %>% mutate(activity, factor(activity, labels = activity_labels$name))
+
+#### Step 5 - Create a second, independent tidy data set with the average of each variable for each activity and each subject
+In dplyr package, the functions group_by() and summarise_all() help us to calculate the mean for all the features for each subject and activity
+<!-- -->
+    avg_data <- data %>% 
+      group_by(activity, subject) %>%
+      summarise_all(mean)
 
 ### Description of the data set
 
