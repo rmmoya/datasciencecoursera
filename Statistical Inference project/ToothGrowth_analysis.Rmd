@@ -1,0 +1,44 @@
+---
+title: "ToothGrowth analysis"
+author: "rmmoya"
+date: "November 1, 2019"
+output: html_document:
+    df_print: paged
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, cache = TRUE)
+data(ToothGrowth)
+```
+
+## Summary of the data
+
+The data to be analyzed corresponds to the ToothGrowth dataset from R datasets package and represents the effect of vitamin C on tooth growth in Guinea Pigs.
+
+The response is the length of odontoblasts (cells responsible for tooth growth) in 60 guinea pigs. Each animal received one of three dose levels of vitamin C (0.5, 1, and 2 mg/day) by one of two delivery methods, orange juice or ascorbic acid (a form of vitamin C and coded as VC).
+
+Using str function it can be easily seen the class type of each of the 3 variables.
+```{r}
+str(ToothGrowth)
+```
+
+And some basic stats from each variable using the summary function.
+
+```{r}
+summary(ToothGrowth)
+```
+
+The range of the length of odontoblasts (len) based on the dose level (dose) and the delivery method (supp) can be visualized in a facet representation:
+
+```{r}
+library(ggplot2)
+ggplot(data = ToothGrowth, aes(y=len, fill = supp)) + geom_boxplot() + facet_grid(ToothGrowth$dose) +
+  labs(y = "Length of odontoblasts", title = "Tooth length vs dose") + 
+  theme(axis.text.x = element_blank())
+```
+
+It can be observed that the higher the dose, the longer the teeth. At the highest dose, there is no difference is the supplement is orange juice (OJ) or ascorbic acid (VC), but in lower doses it seems that orange juice provokes a longer growth.
+
+## Hypothesis testing
+
+## Conclusion

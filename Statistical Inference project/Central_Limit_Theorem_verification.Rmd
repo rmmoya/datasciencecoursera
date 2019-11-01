@@ -1,0 +1,89 @@
+---
+title: "Verification of the Centra Limit Theorem"
+author: "rmmoya"
+date: "October 26, 2019"
+output:
+  html_document:
+    df_print: paged
+---
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, cache = TRUE)
+
+nsim = 1000
+nexp = 40
+lambda = 0.02
+```
+
+## Overview
+
+## Simulations
+
+
+The exponential distribution is denoted as f(x) =  lambda * exp(-lambda*x)) and has the property that mean = 1/lambda and variance = 1/lambda^2.
+
+We are going to perform **`r nsim`** simulations of **`r nexp`** exponentials and a **lambda=`r lambda`** and compare the resulting value of the estimated mean with **mean = 1/lambda=`r 1/lambda`**.
+
+In order to use the same distribution of generated random numbers, a matrix of `r nsim`x`r nexp`, where each column contains the `r nexp` tests of the rexp function.
+
+```{r simulations}
+tests = matrix(data = NA,ncol = nsim, nrow = nexp)
+for (i in (1:nsim)) tests[,i] = rexp(nexp, lambda) 
+```
+
+
+## Sample Mean versus Theoretical Mean
+
+```{r sample_mean}
+
+# Calculate the average mean from the simulations
+mns = NULL
+for (i in 1 : nsim) mns = c(mns, mean(tests[,i]))
+
+# Real exponential distribution
+# f(x) =  lambda * exp(-lambda*x))
+exp_mean = 1/lambda
+
+hist(mns)
+abline(v = c(mean(mns), exp_mean), col = c('blue', 'red'), lty = c(1,2))
+legend(x = "topright", c(paste0('Sample mean = ', round(mean(mns),2)), paste0('Theor. mean (1/lambda) = ', round(exp_mean,2))), lty = c(1,2), col = c('blue', 'red'))
+
+```
+
+The sample mean value obtained from the simulations is quite close to the theoretical mean, with **a difference of `r round(mean(mns) - exp_mean,2)`**, confirming the Central Limit Theorem.
+
+
+## Sample Variance versus Theretical Variance
+Repeating the exercise for the variance, we obtain the following distribution of sample variances:
+
+```{r sample_variance}
+
+# Calculate the average mean from the simulations
+sigmas = NULL
+for (i in 1 : nsim) sigmas = c(sigmas, var(tests[,i]))
+
+# Real exponential distribution
+# f(x) =  lambda * exp(-lambda*x))
+exp_var = 1/lambda^2
+
+hist(sigmas)
+abline(v = c(mean(sigmas), exp_var), col = c('blue', 'red'), lty = c(1,2))
+legend(x = "topright", c(paste0('Sample variance = ', round(mean(sigmas),2)), paste0('Theor.variance (1/lambda) = ', round(exp_var,2))), lty = c(1,2), col = c('blue', 'red'))
+
+```
+
+The sample variance value obtained from the simulations is quite close to the theoretical variance, with **a difference of `r round(mean(sigmas) - exp_var,2)`**, confirming the Central Limit Theorem.
+
+## Distribution
+
+The Central Limit Theorem states that the distribution of averages of iid random variables (properly normalized) becomes that of a standard normal as the sample size increases. 
+
+In the following figure, it can be seen that the distribution of means from the simulations follows the normal distribution depicted with the solid line.
+
+```{r}
+
+hist(mns, freq = FALSE, ylim = c(0,0.06), main = "Distribution of sample means and the normal distribution", xlab = 'Sample means')
+curve(dnorm(x, mean = 1/lambda, sd = 1/lambda/sqrt(nexp)), add = TRUE, lwd = 2, col = 'blue')
+```
+
